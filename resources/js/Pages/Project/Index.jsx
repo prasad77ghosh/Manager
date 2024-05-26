@@ -31,6 +31,20 @@ const Index = ({ auth, projects, queryParams = null }) => {
     searchFieldChanged(name, e.target.value);
   };
 
+  const sortChanged = (name) => {
+    if (name === queryParams.sort_field) {
+      if (queryParams.sort_direction === "asc") {
+        queryParams.sort_direction = "desc";
+      } else {
+        queryParams.sort_direction = "asc";
+      }
+    } else {
+      queryParams.sort_field = name;
+      queryParams.sort_direction = "asc";
+    }
+    router.get(route("project.index"), queryParams);
+  };
+
   return (
     <Authenticated
       user={auth.user}
@@ -52,12 +66,47 @@ const Index = ({ auth, projects, queryParams = null }) => {
                   {/* Headings */}
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 border-b-2 border-gray-500">
                     <tr className="text-nowrap">
-                      <TableHeading name="id">ID</TableHeading>
+                      <TableHeading
+                        name="id"
+                        sort_field={queryParams.sort_field}
+                        sort_direction={queryParams.sort_direction}
+                        sortChanged={sortChanged}
+                      >
+                        ID
+                      </TableHeading>
                       <th className="px-3 py-3">Image</th>
-                      <TableHeading name="name">Name</TableHeading>
-                      <TableHeading name="status">Status</TableHeading>
-                      <TableHeading name="created_at">Create Date</TableHeading>
-                      <TableHeading name="due_date">Due Date</TableHeading>
+                      <TableHeading
+                        name="name"
+                        sort_field={queryParams.sort_field}
+                        sort_direction={queryParams.sort_direction}
+                        sortChanged={sortChanged}
+                      >
+                        Name
+                      </TableHeading>
+                      <TableHeading
+                        name="status"
+                        sort_field={queryParams.sort_field}
+                        sort_direction={queryParams.sort_direction}
+                        sortChanged={sortChanged}
+                      >
+                        Status
+                      </TableHeading>
+                      <TableHeading
+                        name="created_at"
+                        sort_field={queryParams.sort_field}
+                        sort_direction={queryParams.sort_direction}
+                        sortChanged={sortChanged}
+                      >
+                        Create Date
+                      </TableHeading>
+                      <TableHeading
+                        name="due_date"
+                        sort_field={queryParams.sort_field}
+                        sort_direction={queryParams.sort_direction}
+                        sortChanged={sortChanged}
+                      >
+                        Due Date
+                      </TableHeading>
                       <th className="px-3 py-3">Created By</th>
                       <th className="px-3 py-3 text-right">Actions</th>
                     </tr>
@@ -113,7 +162,7 @@ const Index = ({ auth, projects, queryParams = null }) => {
                         </td>
                         <td className="px-3 py-2 text-gray-700 text-wrap hover:underline">
                           {project.name && project.name.length > 40
-                            ? `${project.name.substring(1, 20)}...`
+                            ? `${project.name.substring(0, 20)}...`
                             : `${project.name}`}
                           {/* {project.name} */}
                           {/* <p>Project Name</p> */}
