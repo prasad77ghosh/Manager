@@ -15,9 +15,16 @@ class ProjectController extends Controller
     public function index()
     {
         $query = Project::query();
+         if (request("name")) {
+            $query->where("name", "like", "%" . request("name") . "%");
+        }
+        if (request("status")) {
+            $query->where("status", request("status"));
+        }
         $project = $query->paginate(10)->onEachSide(1);
         return inertia("Project/Index", [
             'projects' => ProjectResource::collection($project),
+            'queryParams' => request()->query() ?: null,
         ]);
     }
 
