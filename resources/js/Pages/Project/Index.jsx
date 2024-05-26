@@ -4,7 +4,7 @@ import TableHeading from "@/Components/TableHeading";
 import TextInput from "@/Components/TextInput";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { PROJECT_STATUS_CLASS_MAP, PROJECT_STATUS_TEXT_MAP } from "@/constant";
-import { Head, router } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import React from "react";
 import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
 
@@ -161,9 +161,12 @@ const Index = ({ auth, projects, queryParams = null }) => {
                           <img src={project.image_path} style={{ width: 60 }} />
                         </td>
                         <td className="px-3 py-2 text-gray-700 text-wrap hover:underline">
-                          {project.name && project.name.length > 40
-                            ? `${project.name.substring(0, 20)}...`
-                            : `${project.name}`}
+                          <Link href={route("project.show", project.id)}>
+                            {project.name && project.name.length > 40
+                              ? `${project.name.substring(0, 20)}...`
+                              : `${project.name}`}
+                          </Link>
+
                           {/* {project.name} */}
                           {/* <p>Project Name</p> */}
                           {/* <Link href={route("project.show", project.id)}>
