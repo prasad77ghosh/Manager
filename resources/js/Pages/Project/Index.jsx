@@ -210,9 +210,9 @@ const Index = ({ auth, projects, queryParams = null, success }) => {
                         </td>
                         <td className="px-3 py-2">{project.createdBy.name}</td>
                         <td className="px-3 py-2 text-nowrap flex items-center justify-center">
-                          <button>
+                          <Link href={route("project.edit", project.id)}>
                             <MdOutlineEdit size={25} />
-                          </button>
+                          </Link>
                           {/* <Link
                             href={route("project.edit", project.id)}
                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1"
