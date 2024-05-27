@@ -10,7 +10,7 @@ import {
   TASK_STATUS_TEXT_MAP,
 } from "@/constant";
 import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
-import { router } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 const PROJECT_STATUS_CLASS_MAP_2 = {
   pending: "bg-amber-500",
   in_progress: "bg-blue-500 ",
@@ -20,6 +20,7 @@ const TaskTable = ({
   tasks,
   queryParams = null,
   hideProjectColumn = false,
+  success,
 }) => {
   queryParams = queryParams || {};
 
@@ -52,8 +53,20 @@ const TaskTable = ({
     router.get(route("task.index"), queryParams);
   };
 
+  const deleteTask = (task) => {
+    if (!window.confirm("Are you sure you want to delete the task?")) {
+      return;
+    }
+    router.delete(route("task.destroy", task.id));
+  };
+
   return (
     <>
+      {success && (
+        <div className="bg-emerald-500 py-2 px-4 text-white rounded mb-4">
+          {success}
+        </div>
+      )}
       <div className="overflow-auto">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           {/* Headings */}
@@ -158,9 +171,12 @@ const TaskTable = ({
                   <td className="px-3 py-2">{task.project.name}</td>
                 )}
                 <td className="px-3 py-2 text-gray-700 text-wrap hover:underline">
-                  {task.name && task.name.length > 40
-                    ? `${task.name.substring(0, 20)}...`
-                    : `${task.name}`}
+                  <Link href={route("task.show", task.id)}>
+                    {task.name && task.name.length > 40
+                      ? `${task.name.substring(0, 20)}...`
+                      : `${task.name}`}
+                  </Link>
+
                   {/* {project.name} */}
                   {/* <p>Project Name</p> */}
                   {/* <Link href={route("project.show", project.id)}>
@@ -179,15 +195,15 @@ const TaskTable = ({
                 <td className="px-3 py-2 text-nowrap">{task.due_date}</td>
                 <td className="px-3 py-2">{task.createdBy.name}</td>
                 <td className="px-3 py-2 text-nowrap flex items-center justify-center">
-                  <button>
+                  <Link href={route("task.edit", task.id)}>
                     <MdOutlineEdit size={25} />
-                  </button>
+                  </Link>
                   {/* <Link
                             href={route("project.edit", project.id)}
                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1"
                           ></Link> */}
                   <button
-                    // onClick={(e) => deleteProject(project)}
+                    onClick={(e) => deleteTask(task)}
                     className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1"
                   >
                     <MdOutlineDelete size={25} />

@@ -1,7 +1,7 @@
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function Create({ auth }) {
@@ -19,7 +19,7 @@ export default function Create({ auth }) {
   };
 
   return (
-    <AuthenticatedLayout
+    <Authenticated
       user={auth.user}
       header={
         <div className="flex justify-between items-center">
@@ -121,6 +121,6 @@ export default function Create({ auth }) {
           </div>
         </div>
       </div>
-    </AuthenticatedLayout>
+    </Authenticated>
   );
 }

@@ -6,6 +6,7 @@ use App\Http\Resources\UserCrudResource;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -51,9 +52,11 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $data = $request->validated();
-        $data['email_verified_at'] = time();
+        $data['email_verified_at'] = Carbon::now()->format('Y-m-d H:i:s');
+
         $data['password'] = bcrypt($data['password']);
         User::create($data);
+        
 
         return to_route('user.index')
             ->with('success', 'User was created');

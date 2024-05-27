@@ -14,6 +14,20 @@ class Task extends Model
     public $incrementing = false;
     protected $keyType = "string";
 
+    protected $fillable = [
+        'name',
+        'description',
+        'image_path',
+        'status',
+        'priority',
+        'due_date',
+        'assigned_user_id',
+        'created_by',
+        'updated_by',
+        'project_id',
+    ];
+
+
     protected static function boot(){
         parent::boot();
         static::creating(function ($model) {
@@ -35,6 +49,6 @@ class Task extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
     public function updatedBy() {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }
