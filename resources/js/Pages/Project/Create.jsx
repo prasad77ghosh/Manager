@@ -8,6 +8,7 @@ import { Head, Link, useForm } from "@inertiajs/react";
 import React from "react";
 
 const Create = ({ auth }) => {
+  console.log("Auth", auth);
   const { data, setData, post, errors, reset } = useForm({
     image: "",
     name: "",

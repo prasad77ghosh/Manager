@@ -14,6 +14,7 @@ const PROJECT_STATUS_CLASS_MAP_2 = {
   completed: "bg-green-500",
 };
 const Index = ({ auth, projects, queryParams = null, success }) => {
+  console.log("Auth", auth);
   queryParams = queryParams || {};
 
   // search project by name
@@ -57,7 +58,7 @@ const Index = ({ auth, projects, queryParams = null, success }) => {
       user={auth.user}
       header={
         <div className="flex justify-between items-center">
-          <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+          <h2 className="font-semibold text-xl text-gray-800 leading-tight">
             Projects
           </h2>
           <Link

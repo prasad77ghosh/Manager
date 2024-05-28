@@ -21,7 +21,19 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'email_verified_at'
+        'email_verified_at',
+        'role'
+    ];
+
+
+    // Define the possible role values
+    const ROLE_USER = 'user';
+    const ROLE_ADMIN = 'admin';
+
+    // Optionally, you can define an array of roles for easy reference
+    public static $roles = [
+        self::ROLE_USER,
+        self::ROLE_ADMIN,
     ];
 
     /**
@@ -33,6 +45,20 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'remember_token',
     ];
+
+
+      // Accessor for role
+    public function getRoleAttribute($value)
+    {
+        return ucfirst($value);
+    }
+
+    // Mutator for role
+    public function setRoleAttribute($value)
+    {
+        $this->attributes['role'] = strtolower($value);
+    }
+
 
     /**
      * Get the attributes that should be cast.

@@ -35,6 +35,7 @@ class Task extends Model
                 $model->{$model->getKeyName()} = (string) Str::uuid();
             }
         });
+        
     }
 
 

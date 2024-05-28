@@ -29,6 +29,12 @@ class ProjectController extends Controller
         if (request("status")) {
             $query->where("status", request("status"));
         }
+
+        if(request('createdBy')){
+            $query->where('created_by', request('createdBy'));
+        }
+
+        
         $project = $query->orderBy($sortField, $sortDirection)->paginate(10)->onEachSide(1);
         return inertia("Project/Index", [
             'projects' => ProjectResource::collection($project),

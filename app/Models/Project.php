@@ -22,6 +22,10 @@ class Project extends Model
                 $model->{$model->getKeyName()} = (string) Str::uuid();
             }
         });
+
+        static::deleting(function($project){
+            $project->tasks()->delete();
+        });
     }
 
     public function tasks(){

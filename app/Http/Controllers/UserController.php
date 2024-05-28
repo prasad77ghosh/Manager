@@ -87,12 +87,15 @@ class UserController extends Controller
     {
         $data = $request->validated();
         $password = $data['password'] ?? null;
+        // $data['role']  = "admin";
         if ($password) {
             $data['password'] = bcrypt($password);
         } else {
             unset($data['password']);
         }
         $user->update($data);
+
+        // dd($user);
 
         return to_route('user.index')
             ->with('success', "User \"$user->name\" was updated");

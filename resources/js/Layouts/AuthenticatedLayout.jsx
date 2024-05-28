@@ -6,6 +6,8 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 
 export default function Authenticated({ user, header, children }) {
+  console.log("USER", user);
+
   const [showingNavigationDropdown, setShowingNavigationDropdown] =
     useState(false);
 
@@ -29,23 +31,33 @@ export default function Authenticated({ user, header, children }) {
                   >
                     Dashboard
                   </NavLink>
+                  {user.role == "Admin" && (
+                    <>
+                      <NavLink
+                        href={route("project.index")}
+                        active={route().current("project.index")}
+                      >
+                        Projects
+                      </NavLink>
+                      <NavLink
+                        href={route("task.index")}
+                        active={route().current("task.index")}
+                      >
+                        All Tasks
+                      </NavLink>
+                      <NavLink
+                        href={route("user.index")}
+                        active={route().current("user.index")}
+                      >
+                        Users
+                      </NavLink>
+                    </>
+                  )}
                   <NavLink
-                    href={route("project.index")}
-                    active={route().current("project.index")}
+                    href={route("task.myTasks")}
+                    active={route().current("task.myTasks")}
                   >
-                    Projects
-                  </NavLink>
-                  <NavLink
-                    href={route("task.index")}
-                    active={route().current("task.index")}
-                  >
-                    All Tasks
-                  </NavLink>
-                  <NavLink
-                    href={route("user.index")}
-                    active={route().current("user.index")}
-                  >
-                    Users
+                    My Tasks
                   </NavLink>
                 </div>
               </div>

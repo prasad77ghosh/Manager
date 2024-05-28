@@ -10,6 +10,7 @@ export default function Create({ auth, user }) {
   const { data, setData, post, errors, reset } = useForm({
     name: user.name || "",
     email: user.email || "",
+    // role: user.role || "",
     password: "",
     password_confirmation: "",
     _method: "PUT",
@@ -56,6 +57,21 @@ export default function Create({ auth, user }) {
 
                 <InputError message={errors.name} className="mt-2" />
               </div>
+              {/* <div className="mt-4">
+                <InputLabel htmlFor="user_role" value="User Role" />
+
+                <TextInput
+                  id="user_role"
+                  type="text"
+                  name="role"
+                  value={data.role}
+                  className="mt-1 block w-full"
+                  isFocused={true}
+                  onChange={(e) => setData("role", e.target.value)}
+                />
+
+                <InputError message={errors.name} className="mt-2" />
+              </div> */}
               <div className="mt-4">
                 <InputLabel htmlFor="user_email" value="User Email" />
 

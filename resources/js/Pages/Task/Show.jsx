@@ -113,7 +113,7 @@ export default function Show({ auth, task }) {
                   </div>
                   <div className="mt-4">
                     <label className="font-bold text-lg">Assigned User</label>
-                    {/* <p className="mt-1">{task.assignedUser.name}</p> */}
+                    <p className="mt-1">{task.assignedUser.name}</p>
                   </div>
                 </div>
               </div>
