@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminAuth
+class Normal
 {
     /**
      * Handle an incoming request.
@@ -20,7 +20,7 @@ class AdminAuth
             return redirect()->route('login');
         }
         $userRole=Auth::user()->role;
-        if ($userRole == 'Admin') {
+        if ($userRole == 'User') {
             return $next($request);
         } else {
             return redirect()->route('login')->with('error', 'You do not have permission to access this page!');
