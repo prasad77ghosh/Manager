@@ -53,6 +53,27 @@ const Index = ({ auth, projects, queryParams = null, success }) => {
     router.delete(route("project.destroy", project.id));
   };
 
+  const downloadCsvOfProject = () => {
+    fetch("/export")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.blob();
+      })
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "projects.xlsx");
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
+      });
+  };
+
   return (
     <Authenticated
       user={auth.user}
@@ -61,12 +82,27 @@ const Index = ({ auth, projects, queryParams = null, success }) => {
           <h2 className="font-semibold text-xl text-gray-800 leading-tight">
             Projects
           </h2>
-          <Link
-            href={route("project.create")}
-            className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
-          >
-            Add new
-          </Link>
+          <div className="flex items-center gap-6">
+            <Link
+              href={route("project.create")}
+              className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
+            >
+              Add new
+            </Link>
+            {/* <Link
+              href={route("project.export")}
+              className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
+            >
+              Download
+            </Link> */}
+
+            <button
+              className="bg-blue-700 text-white px-3 py-1 rounded-md hover:bg-blue-900"
+              onClick={downloadCsvOfProject}
+            >
+              Download
+            </button>
+          </div>
         </div>
       }
     >

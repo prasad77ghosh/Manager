@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ProjectExport;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\TaskResource;
 use App\Models\Project;
@@ -10,7 +11,7 @@ use App\Http\Requests\UpdateProjectRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProjectController extends Controller
 {
@@ -140,5 +141,10 @@ class ProjectController extends Controller
         }
         return to_route('project.index')
             ->with('success', "Project \"$name\" was deleted");
+    }
+
+
+    public function export(){
+        return Excel::download(new ProjectExport(), 'projects.xlsx');
     }
 }

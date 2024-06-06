@@ -13,10 +13,11 @@ Route::redirect('/','/dashboard');
 
 
 // Routes accessible only by admins
-Route::middleware(['auth', 'verified', 'admin'])->group(function() {
+Route::middleware(['auth', 'verified'])->group(function() {
     // Project resource routes
     Route::resource('project', ProjectController::class);
-
+    
+    Route::get('/export', [ProjectController::class, 'export'])->name('project.export');
     // All task resource routes (admins can access everything)
     Route::get('/task/create', [TaskController::class, 'create'])->name('task.create');
     Route::get('/task', [TaskController::class, 'index'])->name('task.index');
@@ -31,7 +32,6 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function() {
 Route::middleware(['auth', 'verified'])->group(function() {
     // Example route accessible by both users and admins
     Route::get('/dashboard', fn() => Inertia::render("Dashboard"))->name('dashboard');
-
     // Route to view user's tasks
     Route::get('/task/my-tasks', [TaskController::class, 'myTasks'])->name('task.myTasks');
     // Explicitly defining the task edit route for users
